@@ -25,7 +25,10 @@ def index_to_position(index, strides):
     """
 
     # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
+    final_index = 0
+    for i in range(len(strides)):
+        final_index += strides[i]*index[i]
+    return final_index
 
 
 def to_index(ordinal, shape, out_index):
@@ -44,9 +47,14 @@ def to_index(ordinal, shape, out_index):
       None : Fills in `out_index`.
 
     """
+    # The plan is: have the elements of the index take the form i // (a0 * .. * a(n-1)) mod an 
     # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
-
+    print(shape)
+    running_divisor = 1
+    for n in range(len(shape)):
+        out_index[n] = (ordinal // running_divisor) % shape[n]
+        running_divisor *= shape[n]
+    return
 
 def broadcast_index(big_index, big_shape, shape, out_index):
     """
@@ -192,7 +200,14 @@ class TensorData:
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
 
         # TODO: Implement for Task 2.1.
-        raise NotImplementedError('Need to implement for Task 2.1')
+        # The part we need to change is strides. This is the part of the tensor that determines how we go from
+        # index to the position in storage.
+        # We also need to change shape.
+        # I think actually all we need to do is get the new shape from the order:
+        new_shape = [self.shape[i] for i in order]
+        new_shape = tuple(new_shape)
+        print(order, new_shape, self.shape)
+        return TensorData(self._storage, new_shape)
 
     def to_string(self):
         s = ""
