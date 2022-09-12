@@ -209,6 +209,7 @@ def reduce(
     # TODO: Implement for Task 0.3.
     # Will implement this via recursion: you replace the first entry by fn() of the first two entries, until you have a single entry.
     def gn(ls):
+        ls = list(ls)
         if len(ls) == 0:
             return 0
         elif len(ls) > 1:
